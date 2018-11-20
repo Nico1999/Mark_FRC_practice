@@ -26,11 +26,11 @@ import frc.robot.subsystems.ExampleSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
-  public static OI m_oi;
+  public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+  public static OI oi;
 
-  Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  Command autonomousCommand;
+  SendableChooser<Command> chooser = new SendableChooser<>();
 
     TalonSRX left1 = new TalonSRX(10);
     VictorSPX left2 = new VictorSPX(12);
@@ -50,10 +50,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_oi = new OI();
-    m_chooser.addDefault("Default Auto", new ExampleCommand());
+    oi = new OI();
+    chooser.addDefault("Default Auto", new ExampleCommand());
     // chooser.addObject("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
+    SmartDashboard.putData("Auto mode", chooser);
 
     c.start();
 
@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
+    autonomousCommand = chooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -113,8 +113,8 @@ public class Robot extends TimedRobot {
      */
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
+    if (autonomousCommand != null) {
+      autonomousCommand.start();
     }
   }
 
@@ -132,8 +132,8 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
     }
 
   }
